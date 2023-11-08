@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="text" name="name" id="name" class="border px-4 py-2 mb-2 w-full" required>
 
             <label for="phone_number" class="block mb-2 font-bold">Phone Number:</label>
-            <input type="text" name="phone_number" id="phone_number" class="border px-4 py-2 mb-2 w-full" required>
+            <input type="text" name="phone_number" id="phone_number" class="border px-4 py-2 mb-2 w-full" value="10" min="10" required>
 
             <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Place Order</button>
         </form>

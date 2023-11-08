@@ -23,7 +23,9 @@ $ts = "SELECT
 
 $sql = "SELECT orders.id, products.name as product_name, orders.quantity, orders.total_price, orders.name, orders.phone_number, orders.status 
         FROM orders 
-        INNER JOIN products ON orders.product_id = products.id";
+        INNER JOIN products ON orders.product_id = products.id
+        ORDER BY orders.id DESC";
+
 
 
 
@@ -43,6 +45,7 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <meta http-equiv="refresh" content="10">
 </head>
 
 <body>
@@ -51,7 +54,12 @@ $result = $conn->query($sql);
     <a href="logout.php">Logout</a>
 
     <h2>Order List</h2>
-    <h2>Total Price of 'livré' Orders: <?php echo $totalLivréPrice; ?> MAD</h2>
+    <div style="display: flex;">
+        <h3>Total Price of livré Orders: <h3 style="color: #00DFA2;"> <?php echo $totalLivréPrice; ?> MAD</h3>
+        </h3>
+    </div>
+
+
     <table>
         <tr>
             <th>Order ID</th>
@@ -61,39 +69,43 @@ $result = $conn->query($sql);
             <th>Client Name</th>
             <th>Phone Number</th>
             <th>Status</th>
-            <th>Actions</th> <!-- Add a new column for actions -->
+            <th>Actions</th>
         </tr>
+
         <?php
         while ($row = $result->fetch_assoc()) {
             echo "<tr>
-                <td>{$row['id']}</td>
-                <td>{$row['product_name']}</td>
-                <td>{$row['quantity']}</td>
-                <td>{$row['total_price']} MAD </td>
-                <td>{$row['name']}</td>
-                <td>{$row['phone_number']}</td>
-                <td>
-                    <form action='update_status.php' method='post'> 
-                        <input type='hidden' name='order_id' value='{$row['id']}'>
-                        <select name='status'>
-                            <option value='en cours' " . ($row['status'] == 'en cours' ? 'selected' : '') . ">En Cours</option>
-                            <option value='livré' " . ($row['status'] == 'livré' ? 'selected' : '') . ">Livré</option>
-                            <option value='return' " . ($row['status'] == 'return' ? 'selected' : '') . ">Return</option>
-                        </select>
-                        <button type='submit'>Update</button>
-                    </form>
-                </td>
-                <td> <!-- Add a new cell for delete button -->
-    <form action='delete_order.php' method='post'> 
-        <input type='hidden' name='order_id' value='{$row['id']}'>
-        <button type='submit'>Delete</button>
-    </form>
-</td>
-            </tr>";
+                    <td>{$row['id']}</td>
+                    <td>{$row['product_name']}</td>
+                    <td>{$row['quantity']}</td>
+                    <td>{$row['total_price']} MAD</td>
+                    <td>{$row['name']}</td>
+                    <td>{$row['phone_number']}</td>
+                    <td>
+                        <form action='update_status.php' method='post'> 
+                            <input type='hidden' name='order_id' value='{$row['id']}'>
+                            <select name='status'>
+                                <option value='en cours' " . ($row['status'] == 'en cours' ? 'selected' : '') . ">En Cours</option>
+                                <option value='livré' " . ($row['status'] == 'livré' ? 'selected' : '') . ">Livré</option>
+                                <option value='return' " . ($row['status'] == 'return' ? 'selected' : '') . ">Return</option>
+                            </select>
+                            <button type='submit'>Update</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action='delete_order.php' method='post'> 
+                            <input type='hidden' name='order_id' value='{$row['id']}'>
+                            <button type='submit'>Delete</button>
+                        </form>
+                    </td>
+                </tr>";
         }
+
         ?>
 
     </table>
+    </div>
+
 </body>
 
 </html>
