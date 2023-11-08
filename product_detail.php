@@ -50,6 +50,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <title><?php echo $name; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        function validateForm() {
+            var name = document.getElementById("name").value;
+            var phone_number = document.getElementById("phone_number").value;
+
+            if (name.length < 3) {
+                alert("Name must be at least 3 characters long.");
+                return false;
+            }
+
+            if (phone_number < 10) {
+                alert("Phone number must be at least 10 characters long.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 
 <body class="p-6 bg-gray-100">
@@ -58,12 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <p class="text-gray-700 mb-2"><?php echo $description; ?></p>
         <p class="text-green-600 font-bold"><?php echo "$" . $price; ?></p>
 
-        <form action="" method="post" class="mt-4">
+        <form action="" method="post" class="mt-4" onsubmit="return validateForm()">
             <label for="quantity" class="block mb-2 font-bold">Quantity:</label>
             <input type="number" name="quantity" id="quantity" class="border px-4 py-2 mb-2 w-full" value="1" min="1" required>
 
             <label for="name" class="block mb-2 font-bold">Your Name:</label>
-            <input type="text" name="name" id="name" class="border px-4 py-2 mb-2 w-full" required>
+            <input type="text" name="name" id="name" class="border px-4 py-2 mb-2 w-full" required minlength="3">
 
             <label for="phone_number" class="block mb-2 font-bold">Phone Number:</label>
             <input type="text" name="phone_number" id="phone_number" class="border px-4 py-2 mb-2 w-full" value="10" min="10" required>
